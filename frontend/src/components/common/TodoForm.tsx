@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Plus, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from 'react-i18next';
 
 export const TodoForm: React.FC<TodoFormProps> = ({ onAdd }) => {
+  const { t } = useTranslation('todos');
   const [title, setTitle] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -30,7 +32,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ onAdd }) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
           <label htmlFor="title" className="text-sm font-medium leading-none text-muted-foreground">
-            添加新的待办事项
+            {t('form.title.label')}
           </label>
           <div className="flex gap-3">
             <Input
@@ -38,7 +40,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ onAdd }) => {
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="输入待办事项..."
+              placeholder={t('form.title.placeholder')}
               disabled={submitting}
               className={cn(
                 "flex-1 transition-all duration-200",
@@ -55,12 +57,12 @@ export const TodoForm: React.FC<TodoFormProps> = ({ onAdd }) => {
               {submitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  添加中
+                  {t('form.submitting')}
                 </>
               ) : (
                 <>
                   <Plus className="mr-2 h-4 w-4" />
-                  添加
+                  {t('form.submit')}
                 </>
               )}
             </Button>

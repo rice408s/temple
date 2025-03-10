@@ -41,5 +41,5 @@ tmp/
 *.out
 go.work 
 
-.cursor/*
+
 .cursor/mcp.json

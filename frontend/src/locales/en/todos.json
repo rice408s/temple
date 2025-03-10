@@ -1,0 +1,55 @@
+{
+  "title": "Todo List",
+  "description": "Manage your todo items",
+  "list": {
+    "empty": "No todos yet",
+    "empty_description": "Start by adding your first todo item",
+    "active": "Active Todos",
+    "completed": "Completed Todos",
+    "total": "{{count}} todos in total",
+    "activeCount": "{{count}} active todos",
+    "completedCount": "{{count}} completed todos",
+    "summary": "{{total}} todos, {{completed}} completed"
+  },
+  "item": {
+    "created": "Created at {{date}}",
+    "updated": "Updated at {{date}}",
+    "delete": "Delete",
+    "status": {
+      "active": "Active",
+      "completed": "Completed"
+    }
+  },
+  "form": {
+    "title": {
+      "label": "Add new todo",
+      "placeholder": "Enter todo item..."
+    },
+    "submit": "Add",
+    "submitting": "Adding"
+  },
+  "filter": {
+    "all": "All",
+    "active": "Active",
+    "completed": "Completed"
+  },
+  "sort": {
+    "created": "Created Date",
+    "updated": "Updated Date",
+    "title": "Title"
+  },
+  "sections": {
+    "active": {
+      "title": "Active",
+      "description": "Tasks in progress"
+    },
+    "completed": {
+      "title": "Completed",
+      "description": "Tasks that have been completed"
+    },
+    "all": {
+      "title": "Todo Manager",
+      "description": "Manage all your todo items"
+    }
+  }
+} 

@@ -1,0 +1,55 @@
+{
+  "title": "待办事项",
+  "description": "管理你的待办事项",
+  "list": {
+    "empty": "暂无待办事项",
+    "empty_description": "开始添加你的第一个待办事项吧",
+    "active": "进行中的待办",
+    "completed": "已完成的待办",
+    "total": "共 {{count}} 项待办",
+    "activeCount": "共 {{count}} 项待办正在进行中",
+    "completedCount": "共 {{count}} 项待办已完成",
+    "summary": "共 {{total}} 项待办，{{completed}} 项已完成"
+  },
+  "item": {
+    "created": "创建于 {{date}}",
+    "updated": "更新于 {{date}}",
+    "delete": "删除",
+    "status": {
+      "active": "进行中",
+      "completed": "已完成"
+    }
+  },
+  "form": {
+    "title": {
+      "label": "添加新的待办事项",
+      "placeholder": "输入待办事项..."
+    },
+    "submit": "添加",
+    "submitting": "添加中"
+  },
+  "filter": {
+    "all": "全部",
+    "active": "进行中",
+    "completed": "已完成"
+  },
+  "sort": {
+    "created": "创建时间",
+    "updated": "更新时间",
+    "title": "标题"
+  },
+  "sections": {
+    "active": {
+      "title": "进行中",
+      "description": "正在进行的待办事项"
+    },
+    "completed": {
+      "title": "已完成",
+      "description": "已经完成的待办事项"
+    },
+    "all": {
+      "title": "待办事项管理",
+      "description": "管理你的所有待办事项"
+    }
+  }
+} 

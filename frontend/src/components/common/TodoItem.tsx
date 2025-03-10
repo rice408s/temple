@@ -3,8 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from 'react-i18next';
 
 export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onDelete }) => {
+  const { t } = useTranslation('todos');
+
   return (
     <li className="group relative transition-all duration-200 hover:bg-accent/50">
       <div className="flex items-center justify-between gap-4 py-4 px-6">
@@ -31,7 +34,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onDelete }) 
               </span>
             </div>
             <p className="mt-1 text-xs text-muted-foreground/70">
-              创建于 {new Date(todo.createdAt).toLocaleString()}
+              {t('item.created', { date: new Date(todo.createdAt).toLocaleString() })}
             </p>
           </div>
         </div>
@@ -46,7 +49,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onDelete }) 
             )}
           >
             <Trash2 className="h-4 w-4" />
-            <span className="sr-only">删除</span>
+            <span className="sr-only">{t('item.delete')}</span>
           </Button>
         </div>
       </div>

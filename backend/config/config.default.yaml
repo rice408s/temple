@@ -1,11 +1,18 @@
+# 服务器配置
 server:
   port: 8080
   host: localhost
   mode: debug  # debug, release, test
+  read_timeout: 10s
+  write_timeout: 10s
+  idle_timeout: 15s
+  max_header_bytes: 1048576  # 1MB
 
+# CORS 配置
 cors:
   allowed_origins:
-    - "*"
+    - "http://localhost:5173"  # 前端开发服务器
+    - "http://localhost:4173"  # 前端生产预览
   allowed_methods:
     - GET
     - POST
@@ -18,21 +25,23 @@ cors:
     - Accept-Encoding
     - X-CSRF-Token
     - Authorization
-    - accept
-    - origin
+    - Accept
+    - Origin
     - Cache-Control
     - X-Requested-With
+    - Refresh-Token
+  allow_credentials: true
+  max_age: 300  # 5分钟
 
-database:
-  type: memory  # memory, sqlite, mysql, postgres
-  # 以下配置在使用内存数据库时不需要
-  # host: localhost
-  # port: 3306
-  # username: root
-  # password: password
-  # dbname: todos
-  # sslmode: disable
+# Supabase 配置
+supabase:
+  project_id: "your-project-id"
+  base_url: "your-project-id.supabase.co"  # 不包含 https://
+  api_key: "your-anon-key"  # 公开的匿名密钥
+  service_role_key: "your-service-role-key"  # 服务端密钥，请保密
+  jwt_secret: "your-jwt-secret"  # JWT 密钥，用于验证 token
 
+# 日志配置
 logger:
   level: debug  # debug, info, warn, error, dpanic, panic, fatal
   encoding: console  # console, json
@@ -42,6 +51,9 @@ logger:
   error_output_paths:
     - stderr
     - logs/error.log
+  development: true  # 开发模式会打印堆栈信息
+  disable_caller: false  # 是否禁用调用者信息
+  disable_stacktrace: false  # 是否禁用堆栈信息
   encoding_config:
     message_key: message
     level_key: level
@@ -50,6 +62,48 @@ logger:
     caller_key: caller
     stacktrace_key: stacktrace
     line_ending: "\n"
-    time_encoder: iso8601
-    duration_encoder: string
-    caller_encoder: short 
+    time_encoder: iso8601  # iso8601, millis, nanos, epoch
+    duration_encoder: string  # string, nanos, ms
+    caller_encoder: short  # short, full
+    level_encoder: lowercase  # lowercase, capital, color
+  sampling:
+    initial: 100  # 每秒的初始采样率
+    thereafter: 100  # 之后的采样率
+  rotate:
+    max_size: 100  # 单个日志文件最大尺寸，单位 MB
+    max_age: 30  # 日志文件最大保存天数
+    max_backups: 10  # 最多保留多少个备份
+    compress: true  # 是否压缩旧日志文件
+
+# 安全配置
+security:
+  jwt:
+    expire: 24h  # token 过期时间
+    refresh_expire: 168h  # 刷新 token 过期时间
+  rate_limit:
+    enabled: true
+    requests: 100  # 请求数
+    duration: 1m  # 时间窗口
+    type: ip  # ip 或 user
+
+# 缓存配置
+cache:
+  type: memory  # memory, redis
+  ttl: 1h  # 缓存过期时间
+  cleanup_interval: 10m  # 清理间隔
+
+# 监控配置
+monitoring:
+  enabled: true
+  metrics_path: /metrics
+  health_check_path: /health
+
+database:
+  type: memory  # memory, sqlite, mysql, postgres
+  # 以下配置在使用内存数据库时不需要
+  # host: localhost
+  # port: 3306
+  # username: root
+  # password: password
+  # dbname: todos
+  # sslmode: disable 

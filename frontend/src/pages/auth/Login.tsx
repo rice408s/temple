@@ -5,14 +5,16 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import useAuthStore from '@/stores/auth';
 import { buildGoogleOAuthURL } from '@/utils/auth';
+import { useTranslation } from 'react-i18next';
 
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-const REDIRECT_URI = import.meta.env.VITE_GOOGLE_REDIRECT_URI || 'http://localhost:5173/auth/callback';
+// const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+// const REDIRECT_URI = import.meta.env.VITE_GOOGLE_REDIRECT_URI || 'http://localhost:5173/auth/callback';
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated } = useAuthStore();
+  const { t } = useTranslation('auth');
 
   const error = location.state?.error;
   const errorMessage = location.state?.message;
@@ -36,15 +38,19 @@ export default function Login() {
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
       <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-6 shadow-md">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900">登录到您的账户</h2>
-          <p className="mt-2 text-sm text-gray-600">开始使用 Todo 应用</p>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+            {t('login.title')}
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            {t('login.description')}
+          </p>
         </div>
 
         {error && (
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>
-              {errorMessage || '登录失败，请重试'}
+              {errorMessage || t('login.error')}
             </AlertDescription>
           </Alert>
         )}
@@ -72,7 +78,7 @@ export default function Login() {
                 fill="#EA4335"
               />
             </svg>
-            使用 Google 账号登录
+            {t('login.google')}
           </button>
         </div>
       </div>

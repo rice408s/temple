@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { handleOAuthCallback } from '@/utils/auth';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Callback() {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation('auth');
 
   const handleAuth = useCallback(async () => {
     console.log('开始处理认证回调...');
@@ -30,9 +32,9 @@ export default function Callback() {
       
     } catch (error: unknown) {
       console.error('登录失败，错误详情:', error);
-      setError(error instanceof Error ? error.message : '登录失败，请重试');
+      setError(error instanceof Error ? error.message : t('login.error'));
     }
-  }, [navigate]);
+  }, [navigate, t]);
 
   useEffect(() => {
     handleAuth();
@@ -53,7 +55,7 @@ export default function Callback() {
             onClick={() => navigate('/login', { replace: true })}
             className="mt-4 w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
           >
-            返回登录页
+            {t('login.back')}
           </button>
         </div>
       </div>
@@ -63,8 +65,8 @@ export default function Callback() {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="text-center">
-        <h2 className="mb-4 text-2xl font-semibold">正在处理登录...</h2>
-        <p className="text-gray-600">请稍候，我们正在验证您的身份</p>
+        <h2 className="mb-4 text-2xl font-semibold">{t('login.processing')}</h2>
+        <p className="text-gray-600">{t('login.verifying')}</p>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export interface UpdateTodoRequest {
 }
 
 export interface TodoFormProps {
-  onAdd: (title: string) => Promise<void>;
+  onAdd: (title: string) => Promise<Todo | void>;
 }
 
 export interface TodoListProps {

@@ -1,0 +1,43 @@
+{
+  "app": {
+    "name": "Todo Manager",
+    "description": "A simple todo management application"
+  },
+  "nav": {
+    "home": "Home",
+    "active": "Active",
+    "completed": "Completed",
+    "settings": "Settings",
+    "all": "All Todos",
+    "menu": "Open Menu"
+  },
+  "actions": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back"
+  },
+  "messages": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Operation successful",
+    "confirmDelete": "Are you sure you want to delete?"
+  },
+  "settings": {
+    "language": "Language",
+    "theme": {
+      "title": "Theme",
+      "light": "Light Mode",
+      "dark": "Dark Mode"
+    },
+    "notifications": "Notifications"
+  },
+  "auth": {
+    "signout": "Sign Out",
+    "signin": "Sign In",
+    "signup": "Sign Up"
+  }
+} 
