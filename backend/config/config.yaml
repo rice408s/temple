@@ -1,0 +1,33 @@
+server:
+  port: 8080
+  host: "0.0.0.0"
+  mode: "debug"
+
+cors:
+  allowed_origins:
+    - "http://localhost:5173"
+  allowed_methods:
+    - "GET"
+    - "POST"
+    - "OPTIONS"
+  allowed_headers:
+    - "Content-Type"
+    - "Authorization"
+    - "Refresh-Token"
+
+logger:
+  level: "debug"
+  encoding: "json"
+  output_paths:
+    - "stdout"
+    - "logs/app.log"
+  error_output_paths:
+    - "stderr"
+    - "logs/error.log"
+
+supabase:
+  project_id: "axyxbqpvwhcggdtkiszq"
+  base_url: "axyxbqpvwhcggdtkiszq.supabase.co"
+  api_key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4eXhicXB2d2hjZ2dkdGtpc3pxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE1NDI3ODYsImV4cCI6MjA1NzExODc4Nn0.ombEpmwzBmrAqgAJJyQh5LLf8PzDS8AGKYYR0q8NlNk"
+  service_role_key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4eXhicXB2d2hjZ2dkdGtpc3pxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MTU0Mjc4NiwiZXhwIjoyMDU3MTE4Nzg2fQ.olqWO3X2pMNSoImRURE6FyywbGmJkVkwRoRNGAM9L8c"
+  jwt_secret: "bv+klUJy2pbhHn9Zpxm9NLousLr6trNi1+8hpN2zl1KKai42mAyI+binqoGvEVVm0iebKWp0r3rG9auTg45sMg==" 

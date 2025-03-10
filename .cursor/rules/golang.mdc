@@ -1,0 +1,170 @@
+---
+description: 这是一个 Go 项目的编码规范和最佳实践指南。它定义了项目的目录结构、错误处理、接口设计、命名规范、日志记录、配置管理、HTTP 接口设计等标准。特别强调了统一使用 POST 方法的 API 设计模式，以及清晰的三层架构（Handler-Service-Repository）实现方式。遵循这些规范可以确保代码的一致性、可维护性和可扩展性。
+globs: *.go
+alwaysApply: false
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+
+# Golang Project Structure Rules
+
+## Directory Structure
+```
+backend/
+├── cmd/           # 主要的应用程序入口
+├── config/        # 配置文件和配置结构
+├── internal/      # 私有应用程序和库代码
+│   ├── config/    # 配置加载和处理
+│   ├── errors/    # 错误定义和处理
+│   ├── handler/   # HTTP处理器
+│   ├── logger/    # 日志配置和工具
+│   ├── middleware/# HTTP中间件
+│   ├── models/    # 数据模型定义
+│   ├── repository/# 数据访问层
+│   └── service/   # 业务逻辑层
+└── pkg/           # 可以被外部应用程序使用的库代码
+```
+
+## Code Style Rules
+
+### 1. 错误处理
+- 使用 `internal/errors` 包中定义的错误类型
+- 错误应该包含足够的上下文信息
+- 在 handler 层统一处理错误响应
+
+### 2. 接口定义
+- 接口应该在使用者包中定义，而不是实现者包中
+- 每个接口都应该有清晰的注释说明其用途
+- 遵循接口隔离原则，保持接口小而精确
+
+### 3. 命名规范
+- 文件名：使用下划线命名法，如 `todo_handler.go`
+- 接口名：使用驼峰命名法，如 `TodoService`
+- 方法名：使用驼峰命名法，如 `GetByID`
+- 包名：使用小写单词，如 `handler`
+
+### 4. 日志规范
+- 使用 `internal/logger` 包进行日志记录
+- 错误日志应包含足够的上下文信息
+- 使用适当的日志级别（Debug, Info, Warn, Error等）
+
+### 5. 配置管理
+- 配置结构定义在 `internal/config` 包中
+- 使用 `viper` 加载和管理配置
+- 支持多环境配置（development, production等）
+
+### 6. HTTP处理
+- 所有请求统一使用 POST 方法，路由命名规范如下：
+  - 列表查询：`POST /api/{resource}/list`
+  - 单个查询：`POST /api/{resource}/get/:id`
+  - 创建操作：`POST /api/{resource}/create`
+  - 更新操作：`POST /api/{resource}/update/:id`
+  - 状态切换：`POST /api/{resource}/toggle/:id`
+  - 删除操作：`POST /api/{resource}/delete/:id`
+- 使用 Gin 框架处理 HTTP 请求
+- 请求参数验证使用 binding tag
+- 统一的响应格式和状态码
+- 使用中间件处理通用逻辑（如CORS、错误处理）
+
+### 7. 依赖注入
+- 使用构造函数进行依赖注入
+- 依赖应该通过接口声明，而不是具体类型
+- 在 main 函数中装配所有依赖
+
+### 8. 测试规范
+- 单元测试文件命名：`xxx_test.go`
+- 使用表驱动测试方式
+- 使用 mock 进行依赖隔离
+- 测试覆盖率要求：>80%
+
+## Key Files
+
+### @backend/internal/models/todo.go
+定义了Todo相关的数据模型和请求/响应结构。
+
+### @backend/internal/handler/todo.go
+实现了Todo相关的HTTP处理逻辑。
+
+### @backend/internal/service/todo_service.go
+实现了Todo相关的业务逻辑。
+
+### @backend/internal/repository/todo_repository.go
+实现了Todo相关的数据访问逻辑。
+
+### @backend/internal/errors/errors.go
+定义了统一的错误类型和错误处理机制。
+
+### @backend/internal/logger/logger.go
+实现了基于Zap的日志系统。
+
+## Common Patterns
+
+### Repository Pattern
+```go
+// 接口定义
+type Repository interface {
+    GetAll() ([]Model, error)
+    GetByID(id string) (*Model, error)
+    Create(model *Model) error
+    Update(model *Model) error
+    Delete(id string) error
+}
+
+// 实现
+type repository struct {
+    // 依赖
+}
+
+func NewRepository(deps ...) Repository {
+    return &repository{...}
+}
+```
+
+### Service Pattern
+```go
+// 接口定义
+type Service interface {
+    GetAll() ([]Model, error)
+    GetByID(id string) (*Model, error)
+    Create(req CreateRequest) (*Model, error)
+    Update(id string, req UpdateRequest) (*Model, error)
+    Delete(id string) error
+}
+
+// 实现
+type service struct {
+    repo Repository
+}
+
+func NewService(repo Repository) Service {
+    return &service{repo: repo}
+}
+```
+
+### Handler Pattern
+```go
+// 结构定义
+type Handler struct {
+    service Service
+}
+
+func NewHandler(service Service) *Handler {
+    return &Handler{service: service}
+}
+
+// 路由注册
+func (h *Handler) RegisterRoutes(r *gin.Engine) {
+    group := r.Group("/api/resource")
+    {
+        group.POST("/list", h.GetAll)       // 获取所有资源
+        group.POST("/get/:id", h.GetByID)   // 获取单个资源
+        group.POST("/create", h.Create)     // 创建资源
+        group.POST("/update/:id", h.Update) // 更新资源
+        group.POST("/toggle/:id", h.Toggle) // 切换资源状态
+        group.POST("/delete/:id", h.Delete) // 删除资源
+    }
+}
+```

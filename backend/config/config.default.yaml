@@ -1,0 +1,55 @@
+server:
+  port: 8080
+  host: localhost
+  mode: debug  # debug, release, test
+
+cors:
+  allowed_origins:
+    - "*"
+  allowed_methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - OPTIONS
+  allowed_headers:
+    - Content-Type
+    - Content-Length
+    - Accept-Encoding
+    - X-CSRF-Token
+    - Authorization
+    - accept
+    - origin
+    - Cache-Control
+    - X-Requested-With
+
+database:
+  type: memory  # memory, sqlite, mysql, postgres
+  # 以下配置在使用内存数据库时不需要
+  # host: localhost
+  # port: 3306
+  # username: root
+  # password: password
+  # dbname: todos
+  # sslmode: disable
+
+logger:
+  level: debug  # debug, info, warn, error, dpanic, panic, fatal
+  encoding: console  # console, json
+  output_paths:
+    - stdout
+    - logs/app.log
+  error_output_paths:
+    - stderr
+    - logs/error.log
+  encoding_config:
+    message_key: message
+    level_key: level
+    time_key: time
+    name_key: logger
+    caller_key: caller
+    stacktrace_key: stacktrace
+    line_ending: "\n"
+    time_encoder: iso8601
+    duration_encoder: string
+    caller_encoder: short 
